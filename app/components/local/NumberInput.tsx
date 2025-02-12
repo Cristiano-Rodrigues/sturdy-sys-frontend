@@ -3,12 +3,13 @@ import { NumberField } from '@base-ui-components/react/number-field';
 import styles from './NumberInput.module.css';
 
 export function NumberInput ({
-  name, defaultValue
+  name, defaultValue, id, htmlName
 }: {
   name: string,
-  defaultValue: number
+  defaultValue: number,
+  id: string,
+  htmlName: string
 }) {
-  const id = React.useId();
   return (
     <NumberField.Root id={id} defaultValue={defaultValue} className={styles.Field}>
       <NumberField.ScrubArea className={styles.ScrubArea}>
@@ -24,7 +25,7 @@ export function NumberInput ({
         <NumberField.Decrement className={styles.Decrement}>
           <MinusIcon />
         </NumberField.Decrement>
-        <NumberField.Input className={styles.Input} />
+        <NumberField.Input className={styles.Input} name={htmlName} />
         <NumberField.Increment className={styles.Increment}>
           <PlusIcon />
         </NumberField.Increment>
