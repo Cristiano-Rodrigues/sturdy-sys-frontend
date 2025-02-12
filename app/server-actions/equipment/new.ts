@@ -32,7 +32,7 @@ export async function createEquipment (prevState: State, data: FormData) {
   }
   
   try {
-    const response = await fetch('http://localhost:5050/equipment', {
+    const response = await fetch(`${process.env.SERVER}/equipment`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

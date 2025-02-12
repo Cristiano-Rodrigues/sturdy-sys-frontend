@@ -18,7 +18,7 @@ export function MenuList () {
       <nav aria-label="main menu">
         <List>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton href='/'>
               <ListItemIcon>
                 <HomeOutlinedIcon />
               </ListItemIcon>
@@ -26,7 +26,7 @@ export function MenuList () {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton href='/equipment'>
               <ListItemIcon>
                 <ConstructionOutlinedIcon />
               </ListItemIcon>
@@ -34,7 +34,7 @@ export function MenuList () {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton href='/technician'>
               <ListItemIcon>
                 <Person2OutlinedIcon />
               </ListItemIcon>
@@ -42,7 +42,7 @@ export function MenuList () {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton href='/request'>
               <ListItemIcon>
                 <InsertDriveFileOutlinedIcon />
               </ListItemIcon>
@@ -50,7 +50,7 @@ export function MenuList () {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton>
+            <ListItemButton href='/report'>
               <ListItemIcon>
                 <AssessmentOutlinedIcon />
               </ListItemIcon>
