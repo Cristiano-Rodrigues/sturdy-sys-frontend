@@ -12,7 +12,7 @@ export default {
         background: "#FFFFFF",
         foreground: "#F7F7F7",
         lightGray: "#F7F7F7",
-        lightBlue: "#00a8f3"
+        lightBlue: "#1565C0"
       },
     },
   },
