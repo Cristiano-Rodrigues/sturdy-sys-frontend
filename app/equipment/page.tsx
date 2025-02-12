@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Home() {
   return (
     <div className="flex w-full h-screen p-2 gap-2">
@@ -18,9 +20,9 @@ export default function Home() {
         <div className="flex w-full h-[70px] bg-gray-300 rounded-lg p-3 gap-2">
           {/* Tools section */}
           <input type="text" placeholder="Pesquise aqui..." className="rounded-lg p-2 w-[400px] outline-none" />
-          <button className="px-2 py-1 bg-blue-600 text-white rounded-lg">
+          <Link href={'/equipment/new'} className="flex justify-center items-center px-2 py-1 bg-blue-600 text-white rounded-lg">
             Novo
-          </button>
+          </Link>
         </div>
         <div className="flex w-full h-full rounded-lg gap-2">
           {/* List of itens */}
