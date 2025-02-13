@@ -25,7 +25,7 @@ export default async function Home() {
 
   return (
     <div className='flex flex-col h-full gap-2'>
-      <Header title='Equipamentos' />
+      <Header title='Solicitações' />
         
       <div className='flex flex-col gap-2 h-full'>
         <div className="flex w-full h-[70px] bg-lightGray rounded-lg p-3 gap-2 justify-between">
@@ -34,7 +34,7 @@ export default async function Home() {
             <Button variant="text">
               <GridViewIcon />
             </Button>
-            <Button variant="contained" href='/equipment/new'>Novo</Button>
+            <Button variant="contained" href='/dashboard/request/new'>Nova solicitação</Button>
           </div>
         </div>
         <div className="flex w-full h-full rounded-lg gap-2">
