@@ -10,8 +10,12 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import Image from 'next/image'
 import { MenuList } from '../local/MenuList'
+import { cookies } from 'next/headers'
 
-export function Sidebar () {
+export async function Sidebar () {
+  const cookieStore = await cookies()
+  const user = JSON.parse(cookieStore.get('user.data')?.value ?? '{}')
+
   return (
     <div className="flex flex-col w-[225px] h-full bg-lightGray rounded-lg p-2 gap-2">
       <div className="w-full rounded-lg p-2 flex gap-2 items-center bg-white">
@@ -42,8 +46,8 @@ export function Sidebar () {
             <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />
           </ListItemAvatar>
           <ListItemText
-            primary="User name"
-            secondary={"user@email.com"}
+            primary={user.name}
+            secondary={user.email}
           />
         </ListItem>
       </List>

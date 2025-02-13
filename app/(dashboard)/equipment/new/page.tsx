@@ -13,8 +13,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 const initialState = {
   state: false,
-  message: '',
-  errors: []
+  message: ''
 }
 
 export default function Home() {

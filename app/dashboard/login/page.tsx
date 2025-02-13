@@ -3,7 +3,7 @@
 import { Alert, Button, TextField } from "@mui/material"
 import CheckIcon from '@mui/icons-material/Check'
 import { useActionState } from "react"
-import { fetchUser } from "../server-actions/auth/login"
+import { fetchUser } from "../../server-actions/auth/login"
 
 const initialState = {
   success: false,
