@@ -1,6 +1,5 @@
 import { Header } from '@/app/components/local/Header'
 import { ItemsForm } from '@/app/components/user/ItemsForm'
-import { Button } from '@mui/material';
 
 export default async function Home() {
   let result = { data: [] }
@@ -20,10 +19,6 @@ export default async function Home() {
         <ItemsForm
           equipments={result.data}
         />
-        <div className='flex gap-2'>
-          <Button variant="contained" type='submit' className='w-fit'>Solicitar</Button>
-          <Button variant="outlined" className='w-fit' href='/dashboard'>Voltar</Button>
-        </div>
       </div>
     </div>
   );

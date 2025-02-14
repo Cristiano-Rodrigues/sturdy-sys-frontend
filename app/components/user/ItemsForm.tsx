@@ -2,7 +2,11 @@
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import AddIcon from '@mui/icons-material/Add'
-import { useState } from "react"
+import { useActionState, useState } from "react"
+import { Button } from '@mui/material'
+import { registerRequest } from '@/app/server-actions/user/request/new'
+import Alert from '@mui/material/Alert'
+import CheckIcon from '@mui/icons-material/Check'
 
 type Equipment = {
   id: string;
@@ -19,6 +23,16 @@ type Item = {
   quantidade: number;
 }
 
+type State = {
+  success: boolean,
+  message: string
+}
+
+const initialState: State = {
+  success: false,
+  message: ''
+}
+
 export function ItemsForm ({
   equipments
 }: {
@@ -32,9 +46,23 @@ export function ItemsForm ({
   })
   const [items, setItems] = useState<Item[]>([])
 
+  const registerRequestWithItems = registerRequest.bind(null, items)
+  const [state, formAction, pending] = useActionState(registerRequestWithItems, initialState)
+
   return (
-    <div className="flex flex-col gap-y-6 w-full rounded-lg">
+    <form action={formAction} className="flex flex-col gap-y-6 w-full rounded-lg">
       <p className="font-bold">Adicione itens à solicitação</p>
+      {
+        state.message && (state.success ? (
+          <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            { state.message }
+          </Alert>
+        ) : (
+          <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
+            { state.message }
+          </Alert>
+        ))
+      }
       <div className="flex flex-col gap-1 w-full">
         <label htmlFor="product">
           Item <span className="text-red-600">*</span>
@@ -122,6 +150,10 @@ export function ItemsForm ({
           </p>
         </div>
       </div>
-    </div>
+      <div className='flex gap-2'>
+        <Button variant="contained" type='submit' className='w-fit' loading={pending}>Solicitar</Button>
+        <Button variant="outlined" className='w-fit' href='/dashboard'>Voltar</Button>
+      </div>
+    </form>
   )
 }

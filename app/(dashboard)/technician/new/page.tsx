@@ -2,13 +2,13 @@
 
 import { Header } from '@/app/components/local/Header'
 import Button from '@mui/material/Button'
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import TextField from '@mui/material/TextField';
-import { createTechnician } from '@/app/server-actions/technician/new';
-import { useActionState } from 'react';
-import Alert from '@mui/material/Alert';
-import CheckIcon from '@mui/icons-material/Check';
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import TextField from '@mui/material/TextField'
+import { createTechnician } from '@/app/server-actions/technician/new'
+import { useActionState } from 'react'
+import Alert from '@mui/material/Alert'
+import CheckIcon from '@mui/icons-material/Check'
 
 const initialState = {
   state: false,
