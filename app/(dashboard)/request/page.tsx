@@ -1,11 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { CollapsibleTable } from '@/app/components/local/CollapsibleTable'
 import { Header } from '@/app/components/local/Header'
+import { cookies } from 'next/headers'
 
 export default async function Home() {
-  let result = { data: [] }
+  let result = { data: [] }, user
+  const cookieStore = await cookies()
 
   try {
+    user = JSON.parse(cookieStore.get('user.data')?.value ?? '')
     const response = await fetch(`${process.env.SERVER}/request`)
     result = await response.json()
   } catch (error) {
@@ -42,7 +45,7 @@ export default async function Home() {
       <div className='flex flex-col gap-2 h-full'>
         <div className="flex w-full h-full rounded-lg gap-2">
           <div className="w-full h-full rounded-lg bg-lightGray p-4 border border-white">
-            <CollapsibleTable rows={groupedData} />
+            <CollapsibleTable rows={groupedData} user={user} />
           </div>
         </div>
       </div>

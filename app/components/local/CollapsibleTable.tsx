@@ -15,10 +15,15 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import Button from '@mui/material/Button'
+import { markAsAnswered, generateReceipt } from '@/app/server-actions/service/service';
+import { useRouter } from 'next/navigation'
 
-function Row(props: { row: any }) {
-  const { row } = props
+function Row(props: { row: any, user: any }) {
+  const { row, user } = props
   const [open, setOpen] = React.useState(false)
+  const [pending, setPending] = React.useState(false)
+  const router = useRouter()
 
   return (
     <React.Fragment>
@@ -36,8 +41,28 @@ function Row(props: { row: any }) {
           {row.id}
         </TableCell>
         <TableCell align="right">{row.data}</TableCell>
-        <TableCell align="right">{row.estado}</TableCell>
+        <TableCell align="right">
+          { row.estado }
+        </TableCell>
         <TableCell align="right">{row.solicitante}</TableCell>
+        {
+          user.permission == 2 && (
+            row.estado == 'in progress' ? (
+              <TableCell align="right">
+                <Button variant='outlined' onClick={async () => {
+                  setPending(true)
+                  await markAsAnswered(row.id)
+                  setPending(false)
+                  router.push(location.pathname)
+                }}>Marcar como atendido</Button>
+              </TableCell>
+            ) : (row.estado == 'done' ? (
+              <TableCell align="right">
+                <Button variant='outlined' onClick={generateReceipt} loading={pending}>Gerar comprovante</Button>
+              </TableCell>
+            ) : '')
+          )
+        }
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -74,7 +99,7 @@ function Row(props: { row: any }) {
   );
 }
 
-export function CollapsibleTable({ rows }: { rows: any[] }) {
+export function CollapsibleTable({ rows, user }: { rows: any[], user: any }) {
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
@@ -85,11 +110,12 @@ export function CollapsibleTable({ rows }: { rows: any[] }) {
             <TableCell align="right">Data</TableCell>
             <TableCell align="right">Estado</TableCell>
             <TableCell align="right">Solicitante</TableCell>
+            <TableCell align="right">Ação</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row, i) => (
-            <Row key={i} row={row} />
+            <Row key={i} row={row} user={user} />
           ))}
         </TableBody>
       </Table>
