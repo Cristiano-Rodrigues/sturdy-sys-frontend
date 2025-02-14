@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from '@mui/material/Button'
 import { TextField } from '@mui/material'
-import { DataTable } from '@/app/components/local/Table'
+import { CollapsibleTable } from '@/app/components/local/CollapsibleTable'
 import { Header } from '@/app/components/local/Header'
 import GridViewIcon from '@mui/icons-material/GridView'
-import { GridColDef } from '@mui/x-data-grid'
 
 export default async function Home() {
   let result = { data: [] }
@@ -15,15 +15,28 @@ export default async function Home() {
     console.error(error)
   }
 
-  const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 70 },
-    { field: 'data', headerName: 'Data', width: 100 },
-    { field: 'etado', headerName: 'Estado', width: 130 },
-    { field: 'quantidade', headerName: 'Quantidade', width: 130 },
-    { field: 'nome', headerName: 'Nome', width: 130 },
-    { field: 'categoria', headerName: 'Categoria', width: 130 },
-    { field: 'solicitante', headerName: 'Solicitante', width: 130 },
-  ];
+  const groupedData = result.data.reduce((accum: any[], curr: any, i: number) => {
+    if (i > 0 && accum[accum.length - 1].id == curr.id) {
+      accum[accum.length - 1].items.push({
+        nome: curr.nome,
+        quantidade: curr.quantidade,
+        categoria: curr.categoria
+      })
+    } else {
+      accum.push({
+        id: curr.id,
+        data: curr.data.split('T')[0],
+        estado: curr.estado,
+        solicitante: curr.solicitante,
+        items: [{
+          nome: curr.nome,
+          quantidade: curr.quantidade,
+          categoria: curr.categoria
+        }]
+      })
+    }
+    return accum
+  }, [])
 
   return (
     <div className='flex flex-col h-full gap-2'>
@@ -36,12 +49,12 @@ export default async function Home() {
             <Button variant="text">
               <GridViewIcon />
             </Button>
-            <Button variant="contained" href='/technician/new'>Novo</Button>
+            <Button variant="contained" href='/dashboard/request/new'>Novo</Button>
           </div>
         </div>
         <div className="flex w-full h-full rounded-lg gap-2">
           <div className="w-full h-full rounded-lg bg-lightGray p-4 border border-white">
-            <DataTable rows={result.data} columns={columns} />
+            <CollapsibleTable rows={groupedData} />
           </div>
         </div>
       </div>
