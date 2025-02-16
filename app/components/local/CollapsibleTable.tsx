@@ -1,29 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 'use client'
 
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Collapse from '@mui/material/Collapse';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import * as React from 'react'
+import Box from '@mui/material/Box'
+import Collapse from '@mui/material/Collapse'
+import IconButton from '@mui/material/IconButton'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
+import TableCell from '@mui/material/TableCell'
+import TableContainer from '@mui/material/TableContainer'
+import TableHead from '@mui/material/TableHead'
+import TableRow from '@mui/material/TableRow'
+import Typography from '@mui/material/Typography'
+import Paper from '@mui/material/Paper'
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import Button from '@mui/material/Button'
-import { markAsAnswered, generateReceipt } from '@/app/server-actions/service/service';
+import { markAsAnswered, generateReceipt } from '@/app/server-actions/service/service'
 import { useRouter } from 'next/navigation'
+import clsx from 'clsx'
+
+type States = 'pending' | 'in progress' | 'done'
 
 function Row(props: { row: any, user: any }) {
   const { row, user } = props
   const [open, setOpen] = React.useState(false)
-  const [pending, setPending] = React.useState(false)
   const router = useRouter()
+  const mapStates = {
+    pending: 'Pendente',
+    'in progress': 'Em Andamento',
+    done: 'Concluído'
+  }
 
   return (
     <React.Fragment>
@@ -42,7 +49,13 @@ function Row(props: { row: any, user: any }) {
         </TableCell>
         <TableCell align="right">{row.data}</TableCell>
         <TableCell align="right">
-          { row.estado }
+          <div className={clsx('px-2 py-1 rounded-full w-fit ml-auto', {
+            'bg-yellow-200': row.estado == 'in progress',
+            'bg-orange-300': row.estado == 'pending',
+            'bg-green-300': row.estado == 'done'
+          })}>
+            { mapStates[row.estado as States] }
+          </div>
         </TableCell>
         <TableCell align="right">{row.solicitante}</TableCell>
         {
@@ -50,15 +63,13 @@ function Row(props: { row: any, user: any }) {
             row.estado == 'in progress' ? (
               <TableCell align="right">
                 <Button variant='outlined' onClick={async () => {
-                  setPending(true)
                   await markAsAnswered(row.id)
-                  setPending(false)
                   router.push(location.pathname)
                 }}>Marcar como atendido</Button>
               </TableCell>
             ) : (row.estado == 'done' ? (
               <TableCell align="right">
-                <Button variant='outlined' onClick={generateReceipt} loading={pending}>Gerar comprovante</Button>
+                <Button variant='outlined' onClick={generateReceipt}>Gerar comprovante</Button>
               </TableCell>
             ) : '')
           )
@@ -100,6 +111,7 @@ function Row(props: { row: any, user: any }) {
 }
 
 export function CollapsibleTable({ rows, user }: { rows: any[], user: any }) {
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">

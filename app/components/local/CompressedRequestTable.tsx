@@ -18,7 +18,7 @@ const columns: GridColDef[] = [
   { field: 'estado', headerName: 'Estado', width: 130 }
 ]
 
-export function CompressedTable ({ rows }: { rows: any[], user: any }) {
+export function CompressedTable ({ rows }: { rows: any[] }) {
   return (
     <Paper sx={{ height: 400, width: '100%' }}>
       <DataGrid

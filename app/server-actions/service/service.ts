@@ -13,7 +13,7 @@ export async function markAsAnswered (requestId: number) {
 
     return result
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       success: false,
       message: 'Erro na operação'

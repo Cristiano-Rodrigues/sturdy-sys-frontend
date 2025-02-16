@@ -11,7 +11,7 @@ export function Header ({
     <div className="flex items-center justify-between w-full h-[70px] bg-lightGray rounded-lg p-2">
       <p className='text-lg font-bold text-gray-700'>{ title }</p>
       <div className="flex gap-2">
-        <TextField id="outlined-basic" variant="outlined" label='Pesquisar aqui' size='small' />
+        <TextField id="outlined-basic" variant="outlined" label='Pesquisar aqui' size='small' className='bg-white' />
         <Button variant="text" href='#'>
           <NotificationsNoneIcon />
         </Button>

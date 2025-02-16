@@ -15,7 +15,11 @@ export async function registerRequest (items: Item[]) {
     amount: z.number()
   }))
   
-  const mappedItems = items.map(item => ({ id: Number(item.id), amount: item.quantidade }))
+  const mappedItems = items.map(item => ({
+    id: Number(item.id),
+    name: item.nome,
+    amount: item.quantidade
+  }))
   const result = ItemsSchema.safeParse(mappedItems)
   
   if (!result.success) {
@@ -40,10 +44,9 @@ export async function registerRequest (items: Item[]) {
       })
     })
     const result = await response.json()
-
     return result
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       success: false,
       message: 'Algo correu mal ao cadastrar a solicitação'

@@ -71,7 +71,6 @@ export function ItemsForm ({
           id="product" className="p-3 bg-white rounded"
           defaultValue={currItem.nome}
           onChange={e => {
-            console.log(e.target.value)
             setCurrItem(currItem => ({
               ...currItem,
               id: e.target.value,

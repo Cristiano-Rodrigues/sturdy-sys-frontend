@@ -50,7 +50,7 @@ export async function fetchUser (prevState: State, data: FormData) {
     const cookieStore = await cookies()
     cookieStore.set('user.data', JSON.stringify(result.user))
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       success: false,
       message: 'Algo correu mal ao fazer login'
