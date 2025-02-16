@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { CollapsibleTable } from '@/app/components/local/CollapsibleTable'
 import { Header } from '@/app/components/local/Header'
+import { groupData } from '@/app/helpers/groupRequestItems'
 import { cookies } from 'next/headers'
 
 export default async function Home() {
@@ -15,28 +15,7 @@ export default async function Home() {
     console.error(error)
   }
 
-  const groupedData = result.data.reduce((accum: any[], curr: any, i: number) => {
-    if (i > 0 && accum[accum.length - 1].id == curr.id) {
-      accum[accum.length - 1].items.push({
-        nome: curr.nome,
-        quantidade: curr.quantidade,
-        categoria: curr.categoria
-      })
-    } else {
-      accum.push({
-        id: curr.id,
-        data: curr.data.split('T')[0],
-        estado: curr.estado,
-        solicitante: curr.solicitante,
-        items: [{
-          nome: curr.nome,
-          quantidade: curr.quantidade,
-          categoria: curr.categoria
-        }]
-      })
-    }
-    return accum
-  }, [])
+  const groupedData = groupData(result)
 
   return (
     <div className='flex flex-col h-full gap-2'>

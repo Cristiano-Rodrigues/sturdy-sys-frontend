@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Button from '@mui/material/Button'
 import { TextField } from '@mui/material'
 import { DataTable } from '@/app/components/local/Table'
@@ -19,6 +20,7 @@ export default async function Home() {
     { field: 'id', headerName: 'ID', width: 70 },
     { field: 'nome', headerName: 'Nome', width: 130 },
     { field: 'especialidade', headerName: 'Especialidade', width: 130 },
+    { field: 'disponibilidade', headerName: 'Disponibilidade', width: 130 },
   ];
 
   return (
@@ -37,7 +39,10 @@ export default async function Home() {
         </div>
         <div className="flex w-full h-full rounded-lg gap-2">
           <div className="w-full h-full rounded-lg bg-lightGray p-4 border border-white">
-            <DataTable rows={result.data} columns={columns} />
+            <DataTable rows={result.data.map((row: any) => ({
+              ...row,
+              disponibilidade: row.disponibilidade == 0 ? 'Em serviço' : 'Disponível'
+            }))} columns={columns} />
           </div>
         </div>
       </div>
